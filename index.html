@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Участок 50:03:0050480:1383 — Клин, Троицкое</title>
+<meta name="description" content="Точный план земельного участка по кадастровым координатам: геометрия, ориентация, климат, рельеф и зонирование.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header" data-header>
+  <div class="header__inner">
+    <div class="header__brand">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M16 3 L28 10 L28 24 L16 29 L4 24 L4 10 Z" stroke="currentColor" stroke-width="1.6" fill="none"/>
+        <path d="M16 3 V29 M4 10 L28 24 M28 10 L4 24" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span>Участок в Троицком</span>
+    </div>
+    <nav class="header__nav" aria-label="Разделы">
+      <a href="#plan">План</a>
+      <a href="#climate">Климат</a>
+      <a href="#relief">Рельеф</a>
+      <a href="#zoning">Зонирование</a>
+      <a href="#next">Дальше</a>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Переключить тему"></button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero__inner">
+      <p class="eyebrow">Кадастровый номер 50:03:0050480:1383 · Московская область, г. Клин, д. Троицкое</p>
+      <h1 class="hero__title">Проектирование дома на участке 975&nbsp;м²</h1>
+      <p class="hero__lead">Точная геометрия построена по координатам МСК-50 (зона 1) из выписки ЕГРН — без приближений. Дальше — климат, рельеф и зонирование под конкретную форму и ориентацию участка.</p>
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__value">975 м²</span><span class="stat__label">площадь (±22 м²)</span></div>
+        <div class="stat"><span class="stat__value">5</span><span class="stat__label">поворотных точек</span></div>
+        <div class="stat"><span class="stat__value">≈210 м</span><span class="stat__label">над уровнем моря</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="plan">
+    <div class="section__inner">
+      <div class="section__head">
+        <span class="section__num">01</span>
+        <h2 class="section__title">Точный план участка</h2>
+        <p class="section__sub">Построен по координатам X/Y (МСК-50, зона&nbsp;1), переведённым в метровую сетку восток/север. Ориентация плана — север сверху.</p>
+      </div>
+
+      <div class="plan-layout">
+        <div class="plan-card">
+          <svg id="plot-svg" viewBox="0 0 640 640" role="img" aria-labelledby="plot-title">
+            <title id="plot-title">План земельного участка с поворотными точками, ориентированный на север</title>
+          </svg>
+          <div class="plan-legend">
+            <div class="legend-item"><span class="legend-swatch legend-swatch--boundary"></span>Граница участка</div>
+            <div class="legend-item"><span class="legend-swatch legend-swatch--wind"></span>Роза ветров (лето / зима)</div>
+            <div class="legend-item"><span class="legend-swatch legend-swatch--sun"></span>Траектория солнца</div>
+          </div>
+        </div>
+
+        <div class="plan-table">
+          <h3 class="plan-table__title">Границы и соседи</h3>
+          <table>
+            <thead>
+              <tr><th>Отрезок</th><th>Азимут</th><th>Длина</th><th>Смежный участок</th></tr>
+            </thead>
+            <tbody id="edges-tbody"></tbody>
+          </table>
+          <p class="plan-note">Форма — неправильный пятиугольник, вытянутый по линии ЮЗ–СВ. Самая длинная сторона (4→5, 38.1 м) — граница с северным соседом (1846), обращена ближе к северо-востоку. Главный фасад дома смотрит на грань 5→1 (26.5 м) — к восточному соседу (1384), самая открытая и солнечная сторона.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--offset" id="climate">
+    <div class="section__inner">
+      <div class="section__head">
+        <span class="section__num">02</span>
+        <h2 class="section__title">Климат и ориентация</h2>
+        <p class="section__sub">Клинский район, умеренно-континентальный климат. Роза ветров и ход солнца определяют, где ставить дом и хозпостройки, а где — открытые зоны отдыха и сад.</p>
+      </div>
+
+      <div class="climate-grid">
+        <div class="climate-card">
+          <h3>Роза ветров</h3>
+          <ul class="fact-list">
+            <li><strong>Зима:</strong> юго-западный и западный ветер — приносит потепления и снегопады</li>
+            <li><strong>Лето:</strong> северо-западный и западный — освежающий, менее влажный</li>
+            <li><strong>Реже всего:</strong> восточный и юго-восточный</li>
+          </ul>
+          <p class="climate-implication">Вывод: живую изгородь или хозблок ставить с юго-западной и западной стороны участка — это защитит зону отдыха и огород от ветра в обе сезона.</p>
+        </div>
+        <div class="climate-card">
+          <h3>Температура и осадки</h3>
+          <ul class="fact-list">
+            <li><strong>Январь:</strong> в среднем −10&nbsp;°C</li>
+            <li><strong>Июль:</strong> в среднем +18&nbsp;°C</li>
+            <li><strong>Осадки:</strong> ≈660&nbsp;мм/год, пик в июле</li>
+          </ul>
+          <p class="climate-implication">Снеговой район III, ветровой район I по СП 20.13330 — стандартные нагрузки для Подмосковья, без экстремальных требований к конструкции.</p>
+        </div>
+        <div class="climate-card">
+          <h3>Ход солнца</h3>
+          <ul class="fact-list">
+            <li><strong>Широта:</strong> 56.2°N — долгое летнее и короткое зимнее световой день</li>
+            <li><strong>Июнь:</strong> солнце восходит на СВ, заходит на СЗ, почти по всему южному небу</li>
+            <li><strong>Декабрь:</strong> низкая траектория строго по югу, короткий день</li>
+          </ul>
+          <p class="climate-implication">Южный и юго-восточный край участка — самый ценный для огорода, плодовых деревьев и террасы: там больше всего прямого солнца в течение года.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="relief">
+    <div class="section__inner">
+      <div class="section__head">
+        <span class="section__num">03</span>
+        <h2 class="section__title">Рельеф и высота</h2>
+        <p class="section__sub">Спутниковые модели рельефа (SRTM, ASTER) дают только приблизительную картину — их разрешение (30–90 м) крупнее самого участка.</p>
+      </div>
+      <div class="relief-panel">
+        <div class="relief-value">
+          <span class="relief-value__num">≈205–216 м</span>
+          <span class="relief-value__label">абсолютная высота над уровнем моря</span>
+        </div>
+        <p class="relief-text">По доступным глобальным моделям рельефа участок расположен на высоте около 210&nbsp;м. Разброс между соседними точками моделей — 5–10&nbsp;м, но это шум разрешения, а не реальный микрорельеф внутри участка 30×34&nbsp;м.</p>
+        <div class="relief-callout">
+          <strong>Важно.</strong> Для проектирования фундамента, отвода дождевой воды и дренажа этих данных <em>недостаточно</em>. Перепад высот в 0,5–1,5&nbsp;м на таком маленьком участке критичен, а спутник его не видит. Нужна нивелировка на месте — оптический/лазерный уровень или тахеометр, 15–20 точек по сетке 5×5&nbsp;м. Это разовая работа на 1–2 часа, но она определит, куда стекает вода и нужна ли подсыпка.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--offset" id="zoning">
+    <div class="section__inner">
+      <div class="section__head">
+        <span class="section__num">04</span>
+        <h2 class="section__title">Черновой вариант зонирования</h2>
+        <p class="section__sub">Дом стоит тылом к проездной дороге (грань 3→4 — без соседа, самый пологий уклон), фасадом на грань 5→1 — к соседу с востока, самой открытой и солнечной стороне. Въезд — с угла 2-3, там, где скошенный угол участка и стоит опора ЛЭП.</p>
+      </div>
+
+      <div class="house-toggle" role="group" aria-label="Выбор варианта дома">
+        <button type="button" class="house-toggle__btn is-active" data-house="A">Вариант А · 1 этаж, 12×15 м</button>
+        <button type="button" class="house-toggle__btn" data-house="B">Вариант Б · 2 этажа, 8×10 м</button>
+      </div>
+
+      <div class="zoning-layout">
+        <div class="plan-card">
+          <svg id="zoning-svg" viewBox="0 0 640 640" role="img" aria-labelledby="zoning-title">
+            <title id="zoning-title">Черновой вариант зонирования участка</title>
+          </svg>
+        </div>
+        <div class="zoning-legend">
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-house)"></span><div><strong>Дом</strong><p id="house-desc">Тылом к дороге (грань 3→4, без соседа), фасад на грань 5→1 — к соседу с востока, самой солнечной стороне.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-lawn)"></span><div><strong>Лужайка / отдых</strong><p>Перед домом, на востоке — переходное пространство к огороду.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-garden)"></span><div><strong>Огород</strong><p>Восточная часть вдоль грани 5→1 — максимум солнца весь день, ближе к фасаду.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-orchard)"></span><div><strong>Плодовые деревья</strong><p>Северная часть вдоль грани 4→5 у соседа 1846 — не затеняет огород и газон.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-decor)"></span><div><strong>Декоративная зона</strong><p>У калитки на углу 2-3 (опора ЛЭП) — первое, что видно от въезда.</p></div></div>
+        </div>
+      </div>
+      <p class="plan-note">Это черновая гипотеза для обсуждения — точное зонирование нужно уточнить после нивелировки рельефа. Отступ дома от границ — не менее 3 м с каждой стороны.</p>
+    </div>
+  </section>
+
+  <section class="section" id="next">
+    <div class="section__inner">
+      <div class="section__head">
+        <span class="section__num">05</span>
+        <h2 class="section__title">Что дальше</h2>
+      </div>
+      <ol class="next-steps">
+        <li><strong>Нивелировка на месте.</strong> Реальные высотные отметки участка — без них зонирование и дренаж остаются гипотезой.</li>
+        <li><strong>Определить точку въезда и фасада.</strong> Уточнить, с какой стороны проезд/дорога — это фиксирует ориентацию дома.</li>
+        <li><strong>Уточнить тип грунта.</strong> Категория земли — сельхозназначение для дачного строительства; полезно знать состав почвы для огорода и фундамента.</li>
+        <li><strong>Проверить нормы отступов.</strong> От границ соседних участков (1846 на севере, 1384 на востоке) и от дороги/тупика — минимальные отступы по СНиП для построек.</li>
+        <li><strong>Согласовать зонирование.</strong> После нивелировки — зафиксировать финальное расположение дома, сада и построек.</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <p>Данные: выписка ЕГРН № КУВИ-001/2026-103973807 от 03.08.2026 · система координат МСК-50, зона 1</p>
+  </div>
+</footer>
+
+<script src="js/data-embed.js"></script>
+<script src="js/plan.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
