@@ -4,12 +4,16 @@ window.PLOT_DATA = {
   address: "Московская область, г. Клин, д. Троицкое",
   areaM2: 975,
   areaTolerance: 22,
+  // МСК-50 (зона 1): +proj=tmerc +lat_0=0 +lon_0=35.48333333333333 +k=1 +x_0=1250000
+  // +y_0=-5712900.566 +ellps=krass +towgs84=23.57,-140.95,-79.8,0,-0.35,-0.79,-0.22 +units=m
+  // WGS84 получены обратным пересчётом через pyproj, точность проверена round-trip (<1 см).
+  // UTM zone 37N = EPSG:32637.
   points: [
-    { n: 1, east: 0.0, north: 0.0 },
-    { n: 2, east: -31.55, north: -7.52 },
-    { n: 3, east: -36.37, north: -4.55 },
-    { n: 4, east: -41.56, north: 17.26 },
-    { n: 5, east: -4.49, north: 26.12 }
+    { n: 1, east: 0.0, north: 0.0, mskX: 519550.12, mskY: 1326262.58, lat: 56.2076444, lon: 36.7100571, utmE: 357962.36, utmN: 6231549.63 },
+    { n: 2, east: -31.55, north: -7.52, mskX: 519542.60, mskY: 1326231.03, lat: 56.2075819, lon: 36.7095467, utmE: 357930.47, utmN: 6231543.73 },
+    { n: 3, east: -36.37, north: -4.55, mskX: 519545.57, mskY: 1326226.21, lat: 56.2076093, lon: 36.7094699, utmE: 357925.81, utmN: 6231546.94 },
+    { n: 4, east: -41.56, north: 17.26, mskX: 519567.38, mskY: 1326221.02, lat: 56.2078060, lon: 36.7093925, utmE: 357921.74, utmN: 6231568.99 },
+    { n: 5, east: -4.49, north: 26.12, mskX: 519576.24, mskY: 1326258.09, lat: 56.2078796, lon: 36.7099923, utmE: 357959.21, utmN: 6231575.94 }
   ],
   edges: [
     { from: 1, to: 2, dist: 32.43, azimuth: 256.6, neighbor: null, role: "tupik" },
@@ -26,17 +30,21 @@ window.PLOT_DATA = {
       corners: [{east:-33.78,north:-2.48},{east:-36.56,north:9.19},{east:-21.96,north:12.66},{east:-19.19,north:0.99}],
       gate: {east: -33.96, north: -6.04},
       zones: {
-        lawn: [{east:-40.25,north:11.75},{east:-38.82,north:13.08},{east:-37.6,north:13.57},{east:-23.01,north:17.04},{east:-21.25,north:17.11},{east:-19.99,north:16.71},{east:-18.59,north:15.64},{east:-17.59,north:13.7},{east:-14.73,north:1.6},{east:-14.74,north:0.28},{east:-15.14,north:-0.98},{east:-16.2,north:-2.38},{east:-17.72,north:-3.27},{east:-32.65,north:-6.84},{east:-36.37,north:-4.55}],
-        orchard: [{east:-18.21,north:15.13},{east:-19.24,north:16.24},{east:-20.4,north:16.88},{east:-22.57,north:17.12},{east:-37.6,north:13.57},{east:-38.82,north:13.08},{east:-39.85,north:12.25},{east:-40.25,north:11.75},{east:-36.63,north:-3.46},{east:-41.56,north:17.26},{east:-8.2,north:25.23}],
-        garden: [{east:-17.31,north:-3.1},{east:-16.2,north:-2.38},{east:-15.35,north:-1.37},{east:-14.83,north:-0.16},{east:-14.69,north:1.16},{east:-17.59,north:13.7},{east:-18.21,north:15.13},{east:-8.2,north:25.23},{east:-4.49,north:26.12},{east:0.0,north:0.0},{east:-28.0,north:-6.67},{east:-27.98,north:-5.73}],
-        decor: [{east:-31.55,north:-7.52},{east:-32.65,north:-6.84},{east:-27.98,north:-5.73},{east:-28.0,north:-6.67}]
+        lawn: [{east:-9.06,north:-2.16},{east:-31.55,north:-7.52},{east:-28.4,north:-2.41},{east:-29.82,north:-1.54},{east:-19.19,north:0.99},{east:-21.96,north:12.66},{east:-21.13,north:9.17},{east:-12.44,north:13.27},{east:-15.12,north:18.95},{east:-3.73,north:21.68},{east:-4.49,north:26.12},{east:-2.59,north:15.09}],
+        firepit: [{east:-21.96,north:12.66},{east:-32.93,north:10.05},{east:-34.9,north:14.22},{east:-15.12,north:18.95},{east:-12.44,north:13.27},{east:-21.13,north:9.17}],
+        berry: [{east:0.0,north:0.0},{east:-9.06,north:-2.16},{east:-2.59,north:15.09}],
+        garage: [{east:-36.37,north:-4.55},{east:-34.15,north:-0.94},{east:-33.78,north:-2.48},{east:-29.82,north:-1.54},{east:-28.4,north:-2.41},{east:-31.55,north:-7.52}],
+        sauna: [{east:-36.37,north:-4.55},{east:-41.56,north:17.26},{east:-40.51,north:12.88},{east:-23.31,north:16.99},{east:-34.9,north:14.22},{east:-32.93,north:10.05},{east:-36.56,north:9.19},{east:-33.78,north:-2.48},{east:-34.15,north:-0.94}],
+        hedge: [{east:-41.56,north:17.26},{east:-4.49,north:26.12},{east:-3.73,north:21.68},{east:-40.51,north:12.88}]
       },
       areas: {
         house: 180.0,
-        lawn: 277.89,
-        orchard: 150.24,
-        garden: 365.38,
-        decor: 3.88
+        lawn: 348.1,
+        firepit: 116.2,
+        berry: 71.2,
+        garage: 27.2,
+        sauna: 63.9,
+        hedge: 170.8
       }
     },
     B: {
@@ -46,17 +54,21 @@ window.PLOT_DATA = {
       corners: [{east:-33.78,north:-2.48},{east:-35.63,north:5.3},{east:-25.9,north:7.61},{east:-24.05,north:-0.17}],
       gate: {east: -33.96, north: -6.04},
       zones: {
-        lawn: [{east:-22.91,north:-3.48},{east:-34.07,north:-5.97},{east:-36.37,north:-4.55},{east:-38.96,north:6.35},{east:-38.61,north:7.13},{east:-37.68,north:8.13},{east:-36.77,north:8.61},{east:-26.71,north:11.02},{east:-25.35,north:11.07},{east:-24.07,north:10.59},{east:-23.07,north:9.66},{east:-22.5,north:8.42},{east:-20.58,north:0.3},{east:-20.66,north:-1.06},{east:-21.07,north:-2.0},{east:-21.73,north:-2.79}],
-        orchard: [{east:-23.32,north:9.97},{east:-25.01,north:11.0},{east:-26.37,north:11.08},{east:-36.44,north:8.7},{east:-37.95,north:7.92},{east:-38.96,north:6.35},{east:-41.56,north:17.26},{east:-8.2,north:25.23}],
-        garden: [{east:-23.24,north:-3.57},{east:-22.0,north:-3.0},{east:-21.26,north:-2.29},{east:-20.66,north:-1.06},{east:-20.55,north:-0.04},{east:-22.5,north:8.42},{east:-23.32,north:9.97},{east:-8.2,north:25.23},{east:-4.49,north:26.12},{east:0.0,north:0.0},{east:-28.0,north:-6.67},{east:-28.11,north:-4.73}],
-        decor: [{east:-34.07,north:-5.97},{east:-28.11,north:-4.73},{east:-27.99,north:-6.62},{east:-31.55,north:-7.52}]
+        lawn: [{east:-9.06,north:-2.16},{east:-31.55,north:-7.52},{east:-28.4,north:-2.41},{east:-29.82,north:-1.54},{east:-33.78,north:-2.48},{east:-24.05,north:-0.17},{east:-25.9,north:7.61},{east:-25.75,north:6.99},{east:-12.44,north:13.27},{east:-15.12,north:18.95},{east:-3.73,north:21.68},{east:-4.49,north:26.12},{east:-2.59,north:15.09}],
+        firepit: [{east:-25.9,north:7.61},{east:-31.18,north:6.36},{east:-34.9,north:14.22},{east:-15.12,north:18.95},{east:-12.44,north:13.27},{east:-25.75,north:6.99}],
+        berry: [{east:0.0,north:0.0},{east:-9.06,north:-2.16},{east:-2.59,north:15.09}],
+        garage: [{east:-36.37,north:-4.55},{east:-34.15,north:-0.94},{east:-33.78,north:-2.48},{east:-29.82,north:-1.54},{east:-28.4,north:-2.41},{east:-31.55,north:-7.52}],
+        sauna: [{east:-36.37,north:-4.55},{east:-41.56,north:17.26},{east:-40.51,north:12.88},{east:-23.31,north:16.99},{east:-34.9,north:14.22},{east:-31.18,north:6.36},{east:-25.9,north:7.61},{east:-33.68,north:5.76},{east:-35.63,north:5.3},{east:-33.78,north:-2.48},{east:-34.15,north:-0.94}],
+        hedge: [{east:-41.56,north:17.26},{east:-4.49,north:26.12},{east:-3.73,north:21.68},{east:-40.51,north:12.88}]
       },
       areas: {
         house: 80.0,
-        lawn: 158.48,
-        orchard: 259.25,
-        garden: 470.35,
-        decor: 9.3
+        lawn: 387.5,
+        firepit: 160.1,
+        berry: 71.2,
+        garage: 27.2,
+        sauna: 80.6,
+        hedge: 170.8
       }
     }
   }

@@ -25,6 +25,7 @@
     </div>
     <nav class="header__nav" aria-label="Разделы">
       <a href="#plan">План</a>
+      <a href="#coords">Координаты</a>
       <a href="#climate">Климат</a>
       <a href="#relief">Рельеф</a>
       <a href="#zoning">Зонирование</a>
@@ -64,8 +65,7 @@
           </svg>
           <div class="plan-legend">
             <div class="legend-item"><span class="legend-swatch legend-swatch--boundary"></span>Граница участка</div>
-            <div class="legend-item"><span class="legend-swatch legend-swatch--wind"></span>Роза ветров (лето / зима)</div>
-            <div class="legend-item"><span class="legend-swatch legend-swatch--sun"></span>Траектория солнца</div>
+
           </div>
         </div>
 
@@ -83,10 +83,50 @@
     </div>
   </section>
 
-  <section class="section section--offset" id="climate">
+  <section class="section" id="coords">
     <div class="section__inner">
       <div class="section__head">
         <span class="section__num">02</span>
+        <h2 class="section__title">Координаты для других программ</h2>
+        <p class="section__sub">Все 5 поворотных точек участка в трёх системах: местная метровая сетка (восток/север, используется на этом сайте), МСК-50 зона 1 (как в выписке ЕГРН) и WGS-84 / UTM для GPS-навигаторов, Google Earth, QGIS, AutoCAD и других программ.</p>
+      </div>
+
+      <div class="coords-toolbar">
+        <button type="button" class="btn-export" id="export-xlsx">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+          Скачать в Excel (.xlsx)
+        </button>
+        <span class="coords-hint">Лист 1 — метры (восток/север), лист 2 — МСК-50, лист 3 — WGS-84/UTM</span>
+      </div>
+
+      <div class="coords-table-wrap">
+        <table class="coords-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Точка</th>
+              <th colspan="2">Местные, м (сайт)</th>
+              <th colspan="2">МСК-50, зона 1</th>
+              <th colspan="2">WGS-84 (GPS)</th>
+              <th colspan="2">UTM 37N (EPSG:32637)</th>
+            </tr>
+            <tr>
+              <th>Восток</th><th>Север</th>
+              <th>X</th><th>Y</th>
+              <th>Широта</th><th>Долгота</th>
+              <th>Easting</th><th>Northing</th>
+            </tr>
+          </thead>
+          <tbody id="coords-tbody"></tbody>
+        </table>
+      </div>
+      <p class="plan-note">МСК-50 → WGS-84 пересчитано по параметрам ГОСт 32453-2017 (эллипсоид Красовского, 7-параметрическая трансформация Гельмерта), точность проверена обратным пересчётом (&lt;1 см). Центр участка: 56.2077° с.ш., 36.7097° в.д. — можно вставить прямо в Google Maps или Яндекс.Карты.</p>
+    </div>
+  </section>
+
+  <section class="section section--offset" id="climate">
+    <div class="section__inner">
+      <div class="section__head">
+        <span class="section__num">03</span>
         <h2 class="section__title">Климат и ориентация</h2>
         <p class="section__sub">Клинский район, умеренно-континентальный климат. Роза ветров и ход солнца определяют, где ставить дом и хозпостройки, а где — открытые зоны отдыха и сад.</p>
       </div>
@@ -120,13 +160,43 @@
           <p class="climate-implication">Южный и юго-восточный край участка — самый ценный для огорода, плодовых деревьев и террасы: там больше всего прямого солнца в течение года.</p>
         </div>
       </div>
+
+      <div class="sun-sim-card">
+        <div class="sun-sim-head">
+          <h3>Интерактивный ход солнца и роза ветров</h3>
+          <p class="section__sub">Поставьте месяц и время — точка солнца и тень от дома пересчитываются прямо на плане участка, с реальной формой границ и ориентацией.</p>
+        </div>
+        <div class="sun-sim-layout">
+          <div class="sun-sim-plan">
+            <svg id="sun-svg" viewBox="0 0 560 560" role="img" aria-labelledby="sun-title">
+              <title id="sun-title">Симулятор положения солнца и тени от дома на участке</title>
+            </svg>
+          </div>
+          <div class="sun-sim-controls">
+            <div class="sun-readout" id="sun-readout">—</div>
+            <label class="sun-slider-label">Месяц
+              <input type="range" id="sun-month" min="0" max="11" value="5" step="1">
+              <span id="sun-month-val">июнь</span>
+            </label>
+            <label class="sun-slider-label">Время (часы, мск)
+              <input type="range" id="sun-hour" min="4" max="22" value="12" step="0.25">
+              <span id="sun-hour-val">12:00</span>
+            </label>
+            <div class="sun-legend-mini">
+              <div><span class="dot dot--sun"></span>Солнце и тень от дома</div>
+              <div><span class="dot dot--wind"></span>Преобладающий ветер в этом месяце</div>
+            </div>
+            <p class="sun-hint">Расчёт положения солнца — астрономическая формула для широты 56.2° с.ш. и долготы 36.7° в.д., время местное (московское, UTC+3). Высота дома взята ≈ 6 м для оценки тени.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="section" id="relief">
     <div class="section__inner">
       <div class="section__head">
-        <span class="section__num">03</span>
+        <span class="section__num">04</span>
         <h2 class="section__title">Рельеф и высота</h2>
         <p class="section__sub">Спутниковые модели рельефа (SRTM, ASTER) дают только приблизительную картину — их разрешение (30–90 м) крупнее самого участка.</p>
       </div>
@@ -146,9 +216,9 @@
   <section class="section section--offset" id="zoning">
     <div class="section__inner">
       <div class="section__head">
-        <span class="section__num">04</span>
-        <h2 class="section__title">Черновой вариант зонирования</h2>
-        <p class="section__sub">Дом стоит тылом к проездной дороге (грань 3→4 — без соседа, самый пологий уклон), фасадом на грань 5→1 — к соседу с востока, самой открытой и солнечной стороне. Въезд — с угла 2-3, там, где скошенный угол участка и стоит опора ЛЭП.</p>
+        <span class="section__num">05</span>
+        <h2 class="section__title">Зонирование: дом и отдых — в приоритете, огород — по остаточному принципу</h2>
+        <p class="section__sub">Дом стоит тылом к проездной дороге (грань 3→4 — без соседа), фасадом на грань 5→1 — к соседу с востока, самой солнечной стороне. Въезд — с угла 2-3 (скошенный угол, опора ЛЭП). Зонирование учитывает ход солнца, тени от дома и хвойной изгороди, розу ветров (преобладающий зимой юго-запад/запад, летом северо-запад/запад — см. интерактивный симулятор выше) и удобство перемещения между зонами.</p>
       </div>
 
       <div class="house-toggle" role="group" aria-label="Выбор варианта дома">
@@ -163,11 +233,13 @@
           </svg>
         </div>
         <div class="zoning-legend">
-          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-house)"></span><div><strong>Дом</strong><p id="house-desc">Тылом к дороге (грань 3→4, без соседа), фасад на грань 5→1 — к соседу с востока, самой солнечной стороне.</p></div></div>
-          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-lawn)"></span><div><strong>Лужайка / отдых</strong><p>Перед домом, на востоке — переходное пространство к огороду.</p></div></div>
-          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-garden)"></span><div><strong>Огород</strong><p>Восточная часть вдоль грани 5→1 — максимум солнца весь день, ближе к фасаду.</p></div></div>
-          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-orchard)"></span><div><strong>Плодовые деревья</strong><p>Северная часть вдоль грани 4→5 у соседа 1846 — не затеняет огород и газон.</p></div></div>
-          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-decor)"></span><div><strong>Декоративная зона</strong><p>У калитки на углу 2-3 (опора ЛЭП) — первое, что видно от въезда.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-house)"></span><div><strong>Дом</strong><p id="house-desc">тылом к дороге (грань 3→4, без соседа), фасад на грань 5→1 — к соседу с востока, самой солнечной стороне.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-lawn)"></span><div><strong>Лужайка и зона отдыха</strong><p>Самая большая зона (≈380–410 м²) на востоке/юго-востоке к грани 5→1 — максимум солнца весь день, вид из окон главного фасада, не прикрыта тенью от дома или изгороди.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-firepit)"></span><div><strong>Кострище и мангальная зона</strong><p>Вдоль внутреннего края изгороди (север), но вне её тени — защита от ветра с севера/северо-запада без потери солнца, рядом с лужайкой.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-berry)"></span><div><strong>Ягодник — клубника, малина, ежевика, голубика</strong><p>Самый южный угол участка у точки 1 — минимум тени от дома и изгороди, максимальное солнце для ягод.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-garage)"></span><div><strong>Гараж с хозблоком</strong><p>У калитки на углу 2-3 — ближайший въезд с дороги, солнце для него не критично.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-sauna)"></span><div><strong>Баня</strong><p>У глухого тыла дома, вдоль дороги (грань 3→4) — самая тенистая/северо-западная часть — солнце ей не нужно, а выход рядом с гаражом и близок к двору/дому.</p></div></div>
+          <div class="zone-item"><span class="zone-swatch" style="background:var(--zone-hedge)"></span><div><strong>Сосновая/туйевая изгородь</strong><p>Вдоль грани 4→5 (сосед 1846, север) — защита от зимнего северного ветра и вида соседей, вечнозелёная — работает и зимой. Яблони/лиственные — точками вдоль внутреннего края изгороди, чтобы не затенять лужайку.</p></div></div>
         </div>
       </div>
       <p class="plan-note">Это черновая гипотеза для обсуждения — точное зонирование нужно уточнить после нивелировки рельефа. Отступ дома от границ — не менее 3 м с каждой стороны.</p>
@@ -177,7 +249,7 @@
   <section class="section" id="next">
     <div class="section__inner">
       <div class="section__head">
-        <span class="section__num">05</span>
+        <span class="section__num">06</span>
         <h2 class="section__title">Что дальше</h2>
       </div>
       <ol class="next-steps">
@@ -198,8 +270,11 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="js/data-embed.js"></script>
 <script src="js/plan.js"></script>
+<script src="js/coords.js"></script>
+<script src="js/sun-sim.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

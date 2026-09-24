@@ -76,62 +76,9 @@
       })).textContent = d.label;
     });
 
-    // Sun path arc (rough, June high arc south-biased, Dec low arc)
-    // June: sunrise ~NE(45), sunset ~NW(315), passing through S(180) high
-    // Dec: sunrise ~SE(135), sunset ~SW(225), low arc through S
-    function sunArcPath(riseAz, setAz, heightFactor) {
-      const steps = 40;
-      let d = "";
-      for (let i = 0; i <= steps; i++) {
-        const t = i / steps;
-        // interpolate azimuth going the "long way" through south (180)
-        let az;
-        if (riseAz < 180) {
-          az = riseAz + t * ((360 - riseAz) + setAz - 360 + 360) % 360;
-          az = riseAz + t * (360 - riseAz + setAz > 360 ? (setAz - riseAz) : (360 - riseAz + setAz));
-        }
-        az = riseAz + t * (setAz + 360 - riseAz);
-        az = az % 360;
-        const elevation = Math.sin(t * Math.PI) * heightFactor; // 0..heightFactor
-        const r = ringR * (1 - elevation * 0.55);
-        const rad = (az * Math.PI) / 180;
-        const x = center[0] + r * Math.sin(rad);
-        const y = center[1] - r * Math.cos(rad);
-        d += (i === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1) + " ";
-      }
-      return d;
-    }
-
-    // June arc: rise NE(45) -> set NW(315), going via E-S-W (long way through south)
-    const juneD = sunArcPath(45, 315, 1.0);
-    svg.appendChild(svgEl("path", {
-      d: juneD, fill: "none", stroke: sun, "stroke-width": "1.5", "stroke-dasharray": "5,3", opacity: "0.75"
-    }));
-    // December arc: rise SE(135) -> set SW(225), low arc
-    const decD = sunArcPath(135, 225, 0.35);
-    svg.appendChild(svgEl("path", {
-      d: decD, fill: "none", stroke: sun, "stroke-width": "1.5", "stroke-dasharray": "5,3", opacity: "0.4"
-    }));
-
-    // Wind arrows: winter SW+W, summer NW+W
-    function windArrow(az, label, opacity) {
-      const rad = (az * Math.PI) / 180;
-      const rOuter = ringR + 14;
-      const rInner = ringR - 4;
-      const x1 = center[0] + rOuter * Math.sin(rad);
-      const y1 = center[1] - rOuter * Math.cos(rad);
-      const x2 = center[0] + rInner * Math.sin(rad);
-      const y2 = center[1] - rInner * Math.cos(rad);
-      svg.appendChild(svgEl("line", {
-        x1, y1, x2, y2, stroke: sky, "stroke-width": "2.5", opacity, "marker-end": "url(#windarrow)"
-      }));
-    }
-    const defs = svgEl("defs", {});
-    defs.innerHTML = '<marker id="windarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="' + sky + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>';
-    svg.appendChild(defs);
-    windArrow(225, "ЮЗ зима", "0.85");
-    windArrow(270, "З", "0.6");
-    windArrow(315, "СЗ лето", "0.85");
+    // Ход солнца и роза ветров переехали в отдельный интерактивный блок ниже
+    // (раздел «Климат и ориентация») — там можно двигать месяц/время и видеть
+    // тень от дома. Здесь план остаётся чистым — только границы и подписи.
 
     // Boundary polygon
     const boundaryPath = pointsToPath(pts, true);
@@ -237,11 +184,55 @@
       svg.appendChild(svgEl("path", { d, fill: color, opacity: opacity || "0.62", stroke: "none" }));
     }
 
-    fillZone(zones.orchard, "var(--zone-orchard)", "0.55");
-    fillZone(zones.garden, "var(--zone-garden)", "0.55");
-    fillZone(zones.lawn, "var(--zone-lawn)", "0.75");
-    fillZone(zones.decor, "var(--zone-decor)", "0.55");
-    fillZone(house, "var(--zone-house)", "0.8");
+    fillZone(zones.hedge, "var(--zone-hedge)", "0.7");
+    fillZone(zones.sauna, "var(--zone-sauna)", "0.55");
+    fillZone(zones.garage, "var(--zone-garage)", "0.55");
+    fillZone(zones.berry, "var(--zone-berry)", "0.55");
+    fillZone(zones.firepit, "var(--zone-firepit)", "0.5");
+    fillZone(zones.lawn, "var(--zone-lawn)", "0.6");
+    fillZone(house, "var(--zone-house)", "0.85");
+
+    // Small zone labels centered in each polygon (skip tiny/house to avoid clutter)
+    function zoneCentroid(coords) {
+      let cx = 0, cy = 0;
+      coords.forEach((c) => { cx += c.east / coords.length; cy += c.north / coords.length; });
+      return { east: cx, north: cy };
+    }
+    function labelZone(coords, text, dy) {
+      if (!coords || !coords.length) return;
+      const c = zoneCentroid(coords);
+      const [x, y] = toSvg(c.east, c.north);
+      svg.appendChild(svgEl("text", {
+        x, y: y + (dy || 0), "text-anchor": "middle", "font-size": "10.5", "font-weight": "600",
+        fill: "var(--color-text)", opacity: "0.85"
+      })).textContent = text;
+    }
+    labelZone(zones.lawn, "Лужайка · отдых");
+    labelZone(zones.firepit, "Костёр · мангал");
+    labelZone(zones.berry, "Ягоды");
+    labelZone(zones.garage, "Гараж");
+    labelZone(zones.sauna, "Баня");
+    labelZone(zones.hedge, "Хвойная изгородь", -4);
+
+    // Tree markers (apple + a few deciduous) along the inner edge of the hedge band,
+    // spaced so they don't shade the lawn/firepit (hedge sits on the north boundary).
+    const hedgeCoords = zones.hedge;
+    if (hedgeCoords && hedgeCoords.length >= 4) {
+      // hedge is a thin band; sample a few points along its inner (south) edge
+      const innerEdge = [hedgeCoords[2], hedgeCoords[3]]; // by construction, index 2-3 is the inner edge
+      function lerp(p1, p2, t) {
+        return { east: p1.east + (p2.east - p1.east) * t, north: p1.north + (p2.north - p1.north) * t };
+      }
+      const treeSpots = [0.15, 0.4, 0.65, 0.88].map((t) => lerp(innerEdge[0], innerEdge[1], t));
+      treeSpots.forEach((spot, i) => {
+        const [tx, ty] = toSvg(spot.east, spot.north);
+        const isApple = i % 2 === 0;
+        svg.appendChild(svgEl("circle", {
+          cx: tx, cy: ty, r: "5", fill: isApple ? "var(--zone-firepit)" : "var(--zone-hedge)",
+          stroke: "var(--color-surface)", "stroke-width": "1.2"
+        }));
+      });
+    }
 
     // Re-draw boundary on top for a crisp edge
     svg.appendChild(svgEl("path", {

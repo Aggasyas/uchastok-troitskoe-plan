@@ -46,10 +46,12 @@
 
   /* Zoning swatches */
   --zone-house: #a2532e;
-  --zone-garden: #7c9a6f;
-  --zone-orchard: #c98a3f;
-  --zone-lawn: #d9d4c2;
-  --zone-decor: #8a6fa8;
+  --zone-lawn: #9db589;
+  --zone-firepit: #c9743f;
+  --zone-berry: #a5477a;
+  --zone-garage: #7d7566;
+  --zone-sauna: #6d5636;
+  --zone-hedge: #3f5c3a;
 }
 
 [data-theme='dark'] {
@@ -79,10 +81,12 @@
   --shadow-lg: 0 16px 40px oklch(0 0 0 / 0.5);
 
   --zone-house: #d38556;
-  --zone-garden: #7fae72;
-  --zone-orchard: #d9a25a;
-  --zone-lawn: #4a4638;
-  --zone-decor: #a48fc4;
+  --zone-lawn: #7fa06a;
+  --zone-firepit: #d68a52;
+  --zone-berry: #c06a9c;
+  --zone-garage: #9a9184;
+  --zone-sauna: #8a6c46;
+  --zone-hedge: #4f7248;
 }
 
 :root {
@@ -499,4 +503,139 @@
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-surface);
+}
+
+/* ---------- Coordinates table ---------- */
+.coords-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+.btn-export {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-surface);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.btn-export:hover { opacity: 0.85; }
+.coords-hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+}
+.coords-table-wrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+  margin-bottom: var(--space-5);
+}
+.coords-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+.coords-table th, .coords-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-divider);
+}
+.coords-table thead tr:first-child th {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-faint);
+  border-bottom: 1px solid var(--color-divider);
+}
+.coords-table thead tr:last-child th {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  border-bottom: 2px solid var(--color-border);
+}
+.coords-table tbody td:first-child {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.coords-table tbody tr:hover { background: color-mix(in oklab, var(--color-primary) 5%, transparent); }
+
+/* ---------- Interactive sun simulator ---------- */
+.sun-sim-card {
+  margin-top: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.sun-sim-head h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+}
+.sun-sim-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+  margin-top: var(--space-5);
+}
+@media (max-width: 860px) {
+  .sun-sim-layout { grid-template-columns: 1fr; }
+}
+.sun-sim-plan svg { width: 100%; height: auto; }
+.sun-sim-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.sun-readout {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--color-primary);
+  min-height: 1.4em;
+}
+.sun-slider-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.sun-slider-label input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-primary);
+}
+.sun-slider-label span {
+  font-weight: 600;
+  color: var(--color-text);
+}
+.sun-legend-mini {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-divider);
+}
+.sun-legend-mini > div { display: flex; align-items: center; gap: var(--space-2); }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.dot--sun { background: var(--color-orange, #c98a3f); }
+.dot--wind { background: var(--color-sky); }
+.sun-hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  line-height: 1.5;
 }
